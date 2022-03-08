@@ -1,16 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Imgur: The magic of Internet</title>
+    <link rel="stylesheet" href="home.css">
 </head>
+
 <body>
     <div>
-        <h3>
-            Imgur
-        </h3>
+        <div id="main">
+            <div class="container">
+                <p id="logo">imgur</p>
+                <button id="newpost">New Post</button>
+                <input id="input-search" placeholder="Imgaes,#tage,@users , oh my!">
+                <button id="search" onclick="myFunction()"><i class="fa fa-search"></i></button>
+                <button id="ad-free-btn">Go Ad-Free</button>
+                <p class="sign">Sign in</p>
+                <button id="newpost">Sign up</button>
+            </div>
+            <h2 id="title">The memes of tomorrow, today.
+            </h2>
+            <div class="heading-text">
+                <p class="explore">EXPLORE TAGS</p>
+                <p class="more">MORE TAGS +</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="container">
+
     </div>
 </body>
-</html>
+<script type="module">
+    import { homedata } from "./home.js"
+    homedata();
+</script>
+
+<script>
+    
+    var api = "THQmZAArw8DpyGkVnb8bK1CY7zkAbHDwx8yOO0vILFw"
+
+ 
+    async function myFunction() {
+        let input = document.getElementById("input-search").value;
+        
+
+
+        let response = await fetch(`https://api.unsplash.com/search/photos?page=1&query=${input}&client_id=${api}`);
+
+        let data = await response.json();
+        var out = [];
+        // console.log('data:', data)
+        // console.log('data:', data.results.urls)
+        // console.log('data:', data.results[2].urls.regular)
+
+        for (var i = 0; i < data.results.length; i++) {
+            out.push(data.results[i].urls)
+        }
+        //    console.log(out)
+        localStorage.setItem("name", JSON.stringify(input))
+        localStorage.setItem("images_data", JSON.stringify(out))
+
+        window.location.href = "./result.html";
+    }
+</script>
